@@ -1,0 +1,310 @@
+{
+  "info": {
+    "name": "Laravel Search System API",
+    "description": "Complete API collection for the Laravel Website-Wide Search System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "api_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Public Endpoints",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/health",
+              "host": ["{{base_url}}"],
+              "path": ["api", "health"]
+            },
+            "description": "Check if the API is running"
+          }
+        },
+        {
+          "name": "Unified Search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/search?q=laravel&per_page=10&page=1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "laravel",
+                  "description": "Search query (required, min 2 chars)"
+                },
+                {
+                  "key": "per_page",
+                  "value": "10",
+                  "description": "Results per page (optional, default 10, max 50)"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (optional, default 1)"
+                }
+              ]
+            },
+            "description": "Search across all content types (Blog Posts, Products, Pages, FAQs)"
+          }
+        },
+        {
+          "name": "Search - Laravel",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/search?q=laravel",
+              "host": ["{{base_url}}"],
+              "path": ["api", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "laravel"
+                }
+              ]
+            },
+            "description": "Example search for 'laravel'"
+          }
+        },
+        {
+          "name": "Search - Docker",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/search?q=docker",
+              "host": ["{{base_url}}"],
+              "path": ["api", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "docker"
+                }
+              ]
+            },
+            "description": "Example search for 'docker'"
+          }
+        },
+        {
+          "name": "Search - Partial Match",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/search?q=deve",
+              "host": ["{{base_url}}"],
+              "path": ["api", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "deve"
+                }
+              ]
+            },
+            "description": "Example of partial matching - 'deve' matches 'developer', 'development'"
+          }
+        },
+        {
+          "name": "Search - PHP",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/search?q=php&per_page=5",
+              "host": ["{{base_url}}"],
+              "path": ["api", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "php"
+                },
+                {
+                  "key": "per_page",
+                  "value": "5"
+                }
+              ]
+            },
+            "description": "Search for PHP-related content with custom page size"
+          }
+        },
+        {
+          "name": "Search Suggestions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/search/suggestions?q=lar&limit=5",
+              "host": ["{{base_url}}"],
+              "path": ["api", "search", "suggestions"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "lar",
+                  "description": "Search query (required, min 2 chars)"
+                },
+                {
+                  "key": "limit",
+                  "value": "5",
+                  "description": "Number of suggestions (optional, default 5, max 20)"
+                }
+              ]
+            },
+            "description": "Get typeahead search suggestions"
+          }
+        },
+        {
+          "name": "Search Suggestions - prog",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/search/suggestions?q=prog",
+              "host": ["{{base_url}}"],
+              "path": ["api", "search", "suggestions"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "prog"
+                }
+              ]
+            },
+            "description": "Suggestions for 'prog'"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Endpoints",
+      "item": [
+        {
+          "name": "Rebuild Search Index",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/search/rebuild-index",
+              "host": ["{{base_url}}"],
+              "path": ["api", "search", "rebuild-index"]
+            },
+            "description": "Rebuild the search index for all models (Admin only)"
+          }
+        },
+        {
+          "name": "Top Search Terms",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/search/logs/top?limit=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "search", "logs", "top"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of top searches to return (optional, default 10)"
+                }
+              ]
+            },
+            "description": "Get top search terms (Admin only)"
+          }
+        },
+        {
+          "name": "Recent Searches",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/search/logs/recent?limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "search", "logs", "recent"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Number of recent searches to return (optional, default 20)"
+                }
+              ]
+            },
+            "description": "Get recent search queries (Admin only)"
+          }
+        },
+        {
+          "name": "Search Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{api_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/search/logs/statistics",
+              "host": ["{{base_url}}"],
+              "path": ["api", "search", "logs", "statistics"]
+            },
+            "description": "Get comprehensive search statistics (Admin only)"
+          }
+        }
+      ]
+    }
+  ]
+}
+
