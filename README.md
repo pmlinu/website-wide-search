@@ -37,7 +37,7 @@ Make sure you have installed:
 ```bash
 # Clone the repository
 git clone <your-repository-url>
-cd learn
+cd website-wide-search
 ```
 
 ### Step 2: Quick Setup (Recommended)
